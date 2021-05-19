@@ -44,7 +44,6 @@ class Paylocifier::Client
 
   def send_request(method, url, data, legacy: false)
     conn = if url == 'deduction'
-      puts "USING DEDUCTION CONNECTION"
       legacy_deduction_connection
     elsif legacy
       legacy_connection
@@ -140,7 +139,7 @@ class Paylocifier::Client
 
   def connection
     token = refresh_token!
-    @connection ||= Faraday.new(
+    @connection = Faraday.new(
       url:      "#{ config.host }/companies/#{ config.company_id }/",
       headers:  {
         'Content-Type': 'application/json',
@@ -151,7 +150,7 @@ class Paylocifier::Client
 
   def legacy_connection
     token = refresh_token!
-    @legacy_connection ||= Faraday.new(
+    @legacy_connection = Faraday.new(
       url:      "#{ config.legacy_host }/companies/#{ config.company_id }/",
       headers:  {
         'Content-Type': 'application/json',
@@ -162,7 +161,7 @@ class Paylocifier::Client
 
   def legacy_deduction_connection
     token = refresh_token!
-    @legacy_deduction_connection ||= Faraday.new(
+    @legacy_deduction_connection = Faraday.new(
       url:      "#{ config.legacy_host }/",
       headers:  {
         'Content-Type': 'application/json',
