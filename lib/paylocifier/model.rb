@@ -48,8 +48,9 @@ class Paylocifier::Model
       @client ||= Paylocifier::Client.new
     end
 
-    def all
-      collection = client.get(url, legacy: legacy).map do |data|
+    def all(page_number: 0, page_size: 999)
+      url_with_pagination = "#{url}?pageSize=#{page_size}&pageNumber=#{page_number}"
+      collection = client.get(url_with_pagination, legacy: legacy).map do |data|
         self.new(data)
       end
 
