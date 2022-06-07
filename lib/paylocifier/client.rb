@@ -184,6 +184,8 @@ class Paylocifier::Client
       else
         data.deep_transform_keys!(&:underscore)
       end
+    elsif resp.status == 429
+      raise Paylocifier::TooManyRequestError, "#{ resp.status } - #{ resp.reason_phrase }"
     elsif resp.status == 400
       messages = JSON.parse(resp.body).map { |item| "\t - #{ item['message'] } #{ item['options'] }" }
       messages = messages.join("\n")

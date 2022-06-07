@@ -58,7 +58,7 @@ RSpec.describe Paylocifier::Model do
       end
 
       it 'should fetch all resources from the API' do
-        expect_any_instance_of(Faraday::Connection).to receive(:get).with('mocked_models')
+        expect_any_instance_of(Faraday::Connection).to receive(:get).with('mocked_models?pageSize=999&pageNumber=0')
 
         MockedModel.id :my_id
         resources = MockedModel.all

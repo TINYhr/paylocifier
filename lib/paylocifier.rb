@@ -11,6 +11,7 @@ require 'paylocifier/models/deduction'
 
 module Paylocifier
   class Error < StandardError; end
+  class TooManyRequestError < StandardError; end
 
   def self.configure
     yield config
